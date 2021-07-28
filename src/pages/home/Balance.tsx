@@ -66,7 +66,7 @@ function Balance() {
   return (
     <div className={classes.container}>
       <Typography variant="h4" id="tableTitle" component="div">
-        Balanace
+        Balance
       </Typography>
       <div className={classes.wrapper}>
         <Typography className={classes.big} variant="h3" component="div">

@@ -85,7 +85,7 @@ export default function FullScreenDialog() {
   }, []);
 
   if (!coin) return null;
-  const { id, label, balance, value } = coin;
+  const { id, label, balance, value, price } = coin;
 
   const handleClose = () => {
     setOpen(false);
@@ -129,7 +129,7 @@ export default function FullScreenDialog() {
             <span style={{ fontWeight: "bold" }}>Enter amount</span>
             <span
               style={{ fontSize: 12, color: "#aaa" }}
-            >{`${value} ${currency} available`}</span>
+            >{`${value} USD available`}</span>
           </div>
         </Toolbar>
         <div style={{ flexDirection: "row" }}>
@@ -144,11 +144,13 @@ export default function FullScreenDialog() {
               Max
             </Button>
             <PriceBox color="#7134FF" value={num} currency={currency} />
-
+            {currency}
             <IconButton
               onClick={() => {
-                setCurrency(id);
-                setNum(balance);
+                setCurrency(currency === "USD"? id: "USD");
+                const value = currency === "USD" ? num/price : num * price
+                console.log("value", value, "currency",currency, "num",num, "price",price)
+                setNum(value);
               }}
             >
               <SwapVertIcon />
@@ -168,6 +170,7 @@ export default function FullScreenDialog() {
               fullWidth
               color="secondary"
               disabled={num === 0}
+              style={{color: "white"}}
             >
               Continue
             </Button>

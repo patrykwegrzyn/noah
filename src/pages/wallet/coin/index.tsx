@@ -82,7 +82,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function FullScreenDialog() {
   const theme = useTheme();
-  console.log("multi theme", theme);
+
   let history = useHistory();
   const classes = useStyles();
   const [coin, setCoin] = useState<Coin | null>(null);
@@ -134,7 +134,7 @@ export default function FullScreenDialog() {
               {balance} {id}
             </span>
             <span
-              style={{ fontSize: 18, fontWeight: "bold", color: "#14DB6C" }}
+              style={{ fontSize: 18, fontWeight: "bold"}}
               className={classes.title}
             >
               {value}
