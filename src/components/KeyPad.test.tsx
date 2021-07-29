@@ -33,9 +33,8 @@ describe("<KeyPad/>", () => {
 
     //make sure all rows have 3 buttons each
     let i = 0;
-    const rowButtons = wrapper.find(".makeStyles-row-2");
-    while (i < rowButtons.length) {
-      const row = rowButtons.at(i).find("WithStyles(ForwardRef(Button))");
+    while (i < rows.length) {
+      const row = rows.at(i).find("WithStyles(ForwardRef(Button))");
       expect(row).toHaveLength(3);
       i++;
     }
