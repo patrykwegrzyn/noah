@@ -2,7 +2,7 @@ import React from "react";
 
 import { render, shallow, mount } from "enzyme";
 
-import KeyPad from "./KeyPad";
+import KeyPad , {handleState} from "./KeyPad";
 
 React.useLayoutEffect = React.useEffect;
 
@@ -52,4 +52,32 @@ describe("<KeyPad/>", () => {
     expect(props.onChange).toHaveBeenCalledTimes(2);
     expect(props.onChange).toHaveBeenCalledWith(1);
   });
+
+  describe("<handleState/>", () => {
+    it("shoould add decimal point", () => { 
+      const state = handleState(".", ["1"])
+      expect(state).toEqual(["1", "."])
+    })
+
+    it("shoould handle only 1 dot", () => { 
+      const state = handleState(".", ["1", "2", "."])
+      expect(state).toEqual(["1", "2", "."])
+    })
+
+    it("shoould backspace ", () => { 
+      const state = handleState("<-", ["1", "2", "."])
+      expect(state).toEqual(["1", "2"])
+    })
+
+    it("shoould handle keys ", () => { 
+      const state = handleState("1", [])
+      expect(state).toEqual(["1"])
+    })
+
+    it("shoould handle max langth 2 ", () => { 
+      const state = handleState("1", ["1", "1"], 2)
+      expect(state).toHaveLength(2)
+    })
+  })
+
 });

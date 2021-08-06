@@ -26,6 +26,27 @@ const useStyles = makeStyles({
   },
 });
 
+type KeyPadState = string[];
+
+export const handleState = (key: string, state: KeyPadState, l: number = 7): KeyPadState => {
+  switch (key) {
+    case "<-":
+      state.pop();
+      break;
+    case ".":
+      const exist = state.filter((c) => c === key).length;
+      if (!exist) {
+        state = [...state, key];
+      }
+      break;
+    default:
+      if (state.length < l) {
+        state = [...state, key];
+      }
+  }
+  return state;
+};
+
 interface KeyPadProps {
   onChange: (value: number) => void;
 }
@@ -33,7 +54,7 @@ interface KeyPadProps {
 function KeyPad({ onChange }: KeyPadProps) {
   const classes = useStyles();
 
-  const [state, setState] = useState<Array<string>>([]);
+  const [state, setState] = useState<KeyPadState>([]);
 
   const keys = ["1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "0", "<-"];
   const rows = [...Array(Math.ceil(keys.length / 3))];
@@ -45,7 +66,7 @@ function KeyPad({ onChange }: KeyPadProps) {
         <Button
           className={classes.key}
           key={key}
-          onClick={() => handleState(key)}
+          onClick={() => setState(handleState(key, state))}
         >
           {key}
         </Button>
@@ -62,22 +83,6 @@ function KeyPad({ onChange }: KeyPadProps) {
     const value = state.length ? parseFloat(state.join("")) : 0;
     onChange(value);
   }, [state]);
-
-  const handleState = (key: string) => {
-    switch (key) {
-      case "<-":
-        state.pop();
-        setState([...state]);
-        break;
-      case ".":
-        const exist = state.filter((c) => c === key).length;
-        if (!exist) setState([...state, key]);
-        break;
-      default:
-        if (state.length > 7) return;
-        setState([...state, key]);
-    }
-  };
 
   return <div className={classes.container}>{keyPad}</div>;
 }
