@@ -45,10 +45,11 @@ describe("<KeyPad/>", () => {
 
     //first run onChange on useEffect
     expect(props.onChange).toHaveBeenCalledTimes(1);
-    const button = wrapper.find("WithStyles(ForwardRef(Button))");
 
     //run onChange on buttonclick
+    const button = wrapper.find("WithStyles(ForwardRef(Button))");
     button.at(0).simulate("click");
     expect(props.onChange).toHaveBeenCalledTimes(2);
+    expect(props.onChange).toHaveBeenCalledWith(1);
   });
 });
